@@ -1,0 +1,99 @@
+1、Map 是一组键值对的结构，具有击极快的查询速度。
+  用Array的话：
+    var names = ['Michael', 'Bob', 'Tracy'];
+    var scores = [95, 75, 85];
+  用Map的话：
+    var m = new Map([['Michael', 95], ['Bob', 75], ['Tracy', 85]]);
+    m.get('Micheal'); // 95
+  初始化Map
+    var m = new Map();
+    m.set('Adam',67);
+    m.set('Bob',47);
+    m.has('Adam'); // true
+    m.get('Adam'); //67
+    m.delete('Adam');
+    m.get('Adam');// undefined
+    
+  2、Set
+
+    Set和Map类似，也是一组key的集合，但不存储value。由于key不能重复，所以，在Set中，没有重复的key。
+    
+    要创建一个Set，需要提供一个Array作为输入，或者直接创建一个空Set：
+    
+    var s1 = new Set(); // 空Set
+    var s2 = new Set([1, 2, 3]); // 含1, 2, 3
+    重复元素在Set中自动被过滤：
+    
+    var s = new Set([1, 2, 3, 3, '3']);
+    s; // Set {1, 2, 3, "3"}
+    注意数字3和字符串'3'是不同的元素。
+    
+    通过add(key)方法可以添加元素到Set中，可以重复添加，但不会有效果：
+    
+    >>> s.add(4)
+    >>> s
+    {1, 2, 3, 4}
+    >>> s.add(4)
+    >>> s
+    {1, 2, 3, 4}
+    通过delete(key)方法可以删除元素：
+    
+    var s = new Set([1, 2, 3]);
+    s; // Set {1, 2, 3}
+    s.delete(3);
+    s; // Set {1, 2}
+  3、interable
+    遍历Array可以采用下标循环，遍历Map和Set就无法使用下标。
+    为了统一集合类型，ES6标准引入了新的iterable类型，Array、Map和Set都属于iterable类型。
+   
+     var a = ['A', 'B', 'C'];
+    var s = new Set(['A', 'B', 'C']);
+    var m = new Map([[1, 'x'], [2, 'y'], [3, 'z']]);
+    for (var x of a) { // 遍历Array
+        alert(x);
+    }
+    for (var x of s) { // 遍历Set
+        alert(x);
+    }
+    for (var x of m) { // 遍历Map
+        alert(x[0] + '=' + x[1]);
+    }
+    
+    
+    4、常量
+      const PI =3.14;const和let具有块级作用域
+    
+    
+    5、方法---一个对象中绑定函数，称为这个对象的方法。
+      var xiaoming = {
+        name: '小明',
+        birth: 1990,
+        age:　function(){
+          .....do something
+        }
+      }
+    
+      一个方法内部，this始终指向当前对象。
+      让我们拆开写：
+      function getAge() {
+          var y = new Date().getFullYear();
+          return y - this.birth;
+      }
+      var xiaoming = {
+          name: '小明',
+          birth: 1990,
+          age: getAge
+      };
+      xiaoming.age(); // 25, 正常结果
+      getAge(); // NaN
+      如果以对象的方法形式调用，比如xiaoming.age()，该函数的this指向被调用的对象，也就是xiaoming，这是符合我们预期的。
+      如果单独调用函数，比如getAge()，此时，该函数的this指向全局对象，也就是window。
+      如果这么写：
+      var fn = xiaoming.age; // 先拿到xiaoming的age函数
+      fn(); // NaN
+      也是不行的！要保证this指向正确，必须用obj.xxx()的形式调用！
+    
+    
+    
+    
+    
