@@ -1,0 +1,69 @@
+例子
+
+火狐下
+1、频繁DOM操作，影响性能
+  function(){
+    var oDiv = document.getElementById('div1');
+    console.time('hello');
+    for(var i=0;i<500;i++){
+      oDiv.innerHTML= 'a';
+    }
+    console.time('hello');
+  }
+  time// 600ms
+   改写后
+  function(){
+    var oDiv = document.getElementById('div1');
+    var str = '';
+    
+    console.time('hello');
+    for(var i=0;i<500;i++){
+      str += 'a'
+    }
+    oDiv.innertHTML = str;
+    console.timeEnd('hello');
+  }
+  time //1ms
+  相差600倍时间；
+
+2、innerHTML与DOM相比
+  不同浏览器表现不同。
+
+3、克隆节点比直接循环创建节点快
+  window.onload = function(){
+    var oUl = document.getElementById('ul1');
+    var str = '';
+    console.time('hello');
+    for(var i = 0;i<500;i++){
+      var oLi = document.createElement('li');
+      oLi.innerHTML = 'li';
+      oUl.appendChild(oLi)
+    }
+    conole.timeEnd('hello');
+  }
+   改写后 克隆的写法。
+   window.onload = function(){
+    var oUl = document.getElementById('ul1');
+    var str = '';
+    console.time('hello');
+    var oLi = document.createElement('li');
+    oLi.innerHTML = 'li';
+    for(var i = 0;i<500;i++){
+      var newLi = oLi.cloneNode(true);
+      oUl.appendChild(newLi);
+    }
+    conole.timeEnd('hello');
+  }
+4、访问元素集合，尽量使用局部变量。
+5、使用querySelector() 方法IE8以下不支持
+  比如： 
+    a: var oUl = document.getElementById('ul1');
+       var oLi = oUl.document.getElementsByTagName('li');
+    b:
+      var oLi = document.querySelectorAll('#ul1 li'); //选取 li 只操作了一次;    
+    
+  
+  
+  
+  
+  
